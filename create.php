@@ -50,7 +50,7 @@ $payment->setIntent('sale')
     $transaction
 ))
     ->setPayer($payer)
-    ->setRedirectUrls($redirect_urls);
+    ->setRedirectUrls($redirectUrls);
 
 
 // Create payment with valid API context
@@ -59,6 +59,8 @@ try {
     
     // Get PayPal redirect URL and redirect user
     $approvalUrl = $payment->getApprovalLink();
+    
+    echo json_encode(['paymentID' => $payment->getId()]);
     
     // REDIRECT USER TO $approvalUrl
 } catch (PayPal\Exception\PayPalConnectionException $ex) {
