@@ -40,6 +40,10 @@ $payment->setIntent('sale')->setTransactions(array(
     $transaction
 ));
 
+$payer = new Payer();
+$payer->setPaymentMethod('paypal');
+$payment->setPayer($payer);
+
 // Create payment with valid API context
 try {
     $payment->create($apiContext);
