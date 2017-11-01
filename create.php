@@ -20,9 +20,9 @@ $amount->setCurrency("USD")->setTotal(10.99);
 // Set transaction object
 $transaction = new Transaction();
 $transaction->setAmount($amount);
-
+// Set unique invoice number to avoid duplicate transaction
 $transaction->setInvoiceNumber(uniqid());
-
+// Add item
 $item = new Item();
 $item->setName("Macbook cover");
 $item->setDescription("macbook pro cover.");
@@ -32,7 +32,7 @@ $item->setCurrency("USD");
 
 $itemList = new ItemList();
 $itemList->addItem($item);
-$itemList->setShippingAddress($_POST['address']);
+$itemList->setShippingAddress($_POST);
 $transaction->setItemList($itemList);
 
 $baseUrl = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

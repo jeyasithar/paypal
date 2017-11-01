@@ -254,7 +254,12 @@
 				// Make a call to your server to execute the payment
 				return paypal.request.post(EXECUTE_URL, data)
 					.then(function(res) {
-						window.alert('Payment Complete!');
+						if(res.state == 'approved'){
+							window.alert('Payment Complete!');
+							window.location.href = 'thank-you.html'
+						} else {
+							window.alert('Payment Unsuccessful');
+						}
 					});
 			}
 		}, '#paypal-button-server');
