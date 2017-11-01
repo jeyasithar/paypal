@@ -5,6 +5,7 @@ use PayPal\Api\Payment;
 use PayPal\Api\Transaction;
 use PayPal\Api\ItemList;
 use PayPal\Api\Item;
+use PayPal\Api\RedirectUrls;
 // Autoload SDK package for composer based installations
 require __DIR__ . '/bootstrap.php';
 
@@ -34,15 +35,23 @@ $itemList->addItem($item);
 $itemList->setShippingAddress($_POST['address']);
 $transaction->setItemList($itemList);
 
-// Create the full payment object
-$payment = new Payment();
-$payment->setIntent('sale')->setTransactions(array(
-    $transaction
-));
+$baseUrl = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+$redirectUrls = new RedirectUrls();
+$redirectUrls->setReturnUrl("$baseUrl/thank-you.html")->setCancelUrl("$baseUrl/");
 
 $payer = new Payer();
 $payer->setPaymentMethod('paypal');
-$payment->setPayer($payer);
+
+// Create the full payment object
+$payment = new Payment();
+$payment->setIntent('sale')
+    ->setTransactions(array(
+    $transaction
+))
+    ->setPayer($payer)
+    ->setRedirectUrls($redirect_urls);
+
 
 // Create payment with valid API context
 try {
