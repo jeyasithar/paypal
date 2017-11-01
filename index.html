@@ -2,12 +2,15 @@
 <html lang="en">
 
 <head>
-  <title>Paypal</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Paypal</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -91,35 +94,35 @@
           <input type="text" class="form-control" id="line2" value="Unit #23">
         </div>
       </div>
-      
+
       <div class="form-group row">
         <label for="city" class="col-sm-2 col-form-label">City</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="city" value="San Jose">
         </div>
       </div>
-      
+
       <div class="form-group row">
         <label for="country_code" class="col-sm-2 col-form-label">Country code</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="country_code" value="US">
         </div>
       </div>
-      
+
       <div class="form-group row">
         <label for="postal_code" class="col-sm-2 col-form-label">Postal Code</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="postal_code" value="95131">
         </div>
       </div>
-      
+
       <div class="form-group row">
         <label for="phone" class="col-sm-2 col-form-label">Phone</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="phone" value="011862212345678">
         </div>
       </div>
-      
+
       <div class="form-group row">
         <label for="state" class="col-sm-2 col-form-label">State</label>
         <div class="col-sm-10">
@@ -127,7 +130,8 @@
         </div>
       </div>
     </form>
-    <div id="paypal-button"></div>
+    <div id="paypal-button" class="pull-left">Client side</div>
+    <div id="paypal-button-server" class="pull-right">Server side</div>
   </div>
 
   <script src="https://www.paypalobjects.com/api/checkout.js"></script>
@@ -135,6 +139,19 @@
   <script>
     function checkout() {
       $('#form-checkout').show();
+    }
+
+    function getShippingDetails() {
+      return {
+        "recipient_name": $('#first_name').val() + ' ' + $('#last_name').val(),
+        "line1": $('#line1').val(),
+        "line2": $('#line2').val(),
+        "city": $('#city').val(),
+        "country_code": $('#country_code').val(),
+        "postal_code": $('#postal_code').val(),
+        "phone": $('#phone').val(),
+        "state": $('#state').val()
+      };
     }
     paypal.Button.render({
 
@@ -169,16 +186,7 @@
                   "currency": "USD"
                 }],
                 //Fill shipping address from user information form
-                "shipping_address": {
-                  "recipient_name": $('#first_name').val()+' '+$('#last_name').val(),
-                  "line1": $('#line1').val(),
-                  "line2": $('#line2').val(),
-                  "city": $('#city').val(),
-                  "country_code": $('#country_code').val(),
-                  "postal_code": $('#postal_code').val(),
-                  "phone": $('#phone').val(),
-                  "state": $('#state').val()
-                }
+                "shipping_address": getShippingDetails()
               }
             }]
           }
@@ -187,13 +195,61 @@
 
       onAuthorize: function(data, actions) {
         return actions.payment.execute().then(function(payment) {
-
           alert('Payment Completed!');
           window.location.href = 'thank-you.html'
         });
       }
 
     }, '#paypal-button');
+
+
+    paypal.Button.render({
+
+      env: 'sandbox', // sandbox | production
+
+      // Show the buyer a 'Pay Now' button in the checkout flow
+      commit: true,
+
+      style: {
+        label: 'checkout',
+        size: 'small', // small | medium | large | responsive
+        shape: 'rect', // pill | rect
+        color: 'gold' // gold | blue | silver | black
+      },
+
+      // payment() is called when the button is clicked
+      payment: function() {
+
+        // Set up a url on your server to create the payment
+        var CREATE_URL = '/demo/checkout/api/paypal/payment/create/';
+
+        // Make a call to your server to set up the payment
+        return paypal.request.post(CREATE_URL)
+          .then(function(res) {
+            return res.paymentID;
+          });
+      },
+
+      // onAuthorize() is called when the buyer approves the payment
+      onAuthorize: function(data, actions) {
+
+        // Set up a url on your server to execute the payment
+        var EXECUTE_URL = '/demo/checkout/api/paypal/payment/execute/';
+
+        // Set up the data you need to pass to your server
+        var data = {
+          paymentID: data.paymentID,
+          payerID: data.payerID
+        };
+
+        // Make a call to your server to execute the payment
+        return paypal.request.post(EXECUTE_URL, data)
+          .then(function(res) {
+            window.alert('Payment Complete!');
+          });
+      }
+
+    }, '#paypal-button-server');
   </script>
 
 </body>
