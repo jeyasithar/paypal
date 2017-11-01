@@ -2,137 +2,159 @@
 <html lang="en">
 
 <head>
-  <title>Paypal</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>Paypal</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 
 <body>
 
-  <div class="jumbotron">
-    <div class="container text-center">
-      <h1>Online Store</h1>
-      <p>Mission, Vission & Values</p>
-    </div>
-  </div>
+	<div class="jumbotron">
+		<div class="container text-center">
+			<h1>Online Store</h1>
+			<p>Mission, Vission & Values</p>
+		</div>
+	</div>
 
-  <div class="container">
-    <table id="cart" class="table table-hover table-condensed">
-      <thead>
-        <tr>
-          <th style="width:50%">Product</th>
-          <th style="width:10%">Price</th>
-          <th style="width:8%">Quantity</th>
-          <th style="width:22%" class="text-center">Subtotal</th>
-          <th style="width:10%"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="row">
-              <div class="col-sm-2 hidden-xs"><img src="https://placehold.it/100x100" alt="..." class="img-responsive" /></div>
-              <div class="col-sm-10">
-                <h4 class="nomargin">Macbook PRO cover</h4>
-                <p>item #123CD </p>
-              </div>
-            </div>
-          </td>
-          <td>$10.99</td>
-          <td>
-            1
-          </td>
-          <td data-th="Subtotal" class="text-center">10.99</td>
-          <td class="actions">
-            <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-            <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr class="visible-xs">
-          <td class="text-center"><strong>Total 10.99</strong></td>
-        </tr>
-        <tr>
-          <td colspan="3" class="hidden-xs"></td>
-          <td class="hidden-xs text-center"><strong>Total $10.99</strong></td>
-          <td><a href="#" class="btn btn-success btn-block" onclick='checkout()'>Checkout <i class="fa fa-angle-right"></i></a></td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-  <div class="container" style="display:none" id='form-checkout'>
-    <form class="form-horizontal">
-      <div class="form-group row">
-        <label for="first_name" class="col-sm-2 col-form-label">First Name</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="first_name" value="Brian">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="last_name" class="col-sm-2 col-form-label">Last Name</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="last_name" value="Robinson">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="line1" class="col-sm-2 col-form-label">Address line1</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="line1" value="4th floor">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="line2" class="col-sm-2 col-form-label">Address line2</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="line2" value="Unit #23">
-        </div>
-      </div>
-      
-      <div class="form-group row">
-        <label for="city" class="col-sm-2 col-form-label">City</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="city" value="San Jose">
-        </div>
-      </div>
-      
-      <div class="form-group row">
-        <label for="country_code" class="col-sm-2 col-form-label">Country code</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="country_code" value="US">
-        </div>
-      </div>
-      
-      <div class="form-group row">
-        <label for="postal_code" class="col-sm-2 col-form-label">Postal Code</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="postal_code" value="95131">
-        </div>
-      </div>
-      
-      <div class="form-group row">
-        <label for="phone" class="col-sm-2 col-form-label">Phone</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="phone" value="011862212345678">
-        </div>
-      </div>
-      
-      <div class="form-group row">
-        <label for="state" class="col-sm-2 col-form-label">State</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="state" value="CA">
-        </div>
-      </div>
-    </form>
-    <div id="paypal-button"></div>
-  </div>
+	<div class="container">
+		<table id="cart" class="table table-hover table-condensed">
+			<thead>
+				<tr>
+					<th style="width: 50%">Product</th>
+					<th style="width: 10%">Price</th>
+					<th style="width: 8%">Quantity</th>
+					<th style="width: 22%" class="text-center">Subtotal</th>
+					<th style="width: 10%"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<div class="row">
+							<div class="col-sm-2 hidden-xs">
+								<img src="https://placehold.it/100x100" alt="..."
+									class="img-responsive" />
+							</div>
+							<div class="col-sm-10">
+								<h4 class="nomargin">Macbook PRO cover</h4>
+								<p>item #123CD</p>
+							</div>
+						</div>
+					</td>
+					<td>$10.99</td>
+					<td>1</td>
+					<td data-th="Subtotal" class="text-center">10.99</td>
+					<td class="actions">
+						<button class="btn btn-info btn-sm">
+							<i class="fa fa-refresh"></i>
+						</button>
+						<button class="btn btn-danger btn-sm">
+							<i class="fa fa-trash-o"></i>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr class="visible-xs">
+					<td class="text-center"><strong>Total 10.99</strong></td>
+				</tr>
+				<tr>
+					<td colspan="3" class="hidden-xs"></td>
+					<td class="hidden-xs text-center"><strong>Total
+							$10.99</strong></td>
+					<td><a href="#" class="btn btn-success btn-block"
+						onclick='checkout()'>Checkout <i class="fa fa-angle-right"></i></a></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<div class="container" style="display: none" id='form-checkout'>
+		<form class="form-horizontal">
+			<div class="form-group row">
+				<label for="first_name" class="col-sm-2 col-form-label">First
+					Name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="first_name"
+						value="Brian">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="last_name" class="col-sm-2 col-form-label">Last
+					Name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="last_name"
+						value="Robinson">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="line1" class="col-sm-2 col-form-label">Address
+					line1</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="line1"
+						value="4th floor">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="line2" class="col-sm-2 col-form-label">Address
+					line2</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="line2" value="Unit #23">
+				</div>
+			</div>
 
-  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+			<div class="form-group row">
+				<label for="city" class="col-sm-2 col-form-label">City</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="city" value="San Jose">
+				</div>
+			</div>
 
-  <script>
+			<div class="form-group row">
+				<label for="country_code" class="col-sm-2 col-form-label">Country
+					code</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="country_code"
+						value="US">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="postal_code" class="col-sm-2 col-form-label">Postal
+					Code</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="postal_code"
+						value="95131">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="phone" class="col-sm-2 col-form-label">Phone</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="phone"
+						value="011862212345678">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="state" class="col-sm-2 col-form-label">State</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="state" value="CA">
+				</div>
+			</div>
+		</form>
+		<div id="paypal-button"></div>
+	</div>
+
+	<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+	<script>
     function checkout() {
       $('#form-checkout').show();
     }
