@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.26.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.26.0/js/paypal-checkout.min.js"></script>
+</head>
+
+<body>
+    <div id="paypal-button-container"></div>
+
+    <script>
+
+        // Render the PayPal button
+
+        paypal.Button.render({
+
+            // Pass in the Braintree SDK
+
+            braintree: braintree,
+
+            // Pass in your Braintree authorization key
+
+            client: {
+                sandbox: "access_token$sandbox$hqqxzj5jtv9qgsxn$7cf3220b2b96d8b02456f53388144cd7",
+                production: '<insert production auth key>'
+            },
+
+            // Set your environment
+
+            env: 'sandbox', // sandbox | production
+
+            // Wait for the PayPal button to be clicked
+
+            payment: function(data, actions) {
+
+                // Make a call to create the payment
+
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: '0.01', currency: 'USD' }
+                            }
+                        ]
+                    }
+                });
+            },
+
+            // Wait for the payment to be authorized by the customer
+
+            onAuthorize: function(data, actions) {
+                return actions.payment.tokenize().then(function(data) {
+                    console.log('Braintree nonce:', data.nonce);
+                });
+            }
+
+        }, '#paypal-button-container');
+
+    </script>
+</body>
+    
